@@ -18,9 +18,9 @@ const PrivateRoute = ({ children }) => {
       });
   }, []);
 
-  // if (checking) {
-  //   return <p>Checking Authentication...</p>;
-  // }
+  if (checking) {
+    return <p>Checking Authentication...</p>;
+  }
 
   return authenticated ? children : <Navigate to="/" />;
 };
