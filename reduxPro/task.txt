@@ -1,0 +1,115 @@
+Task 1: Social Media Post Feed with Real-Time Interactions
+Objective: Evaluate deep knowledge of Redux Toolkit (with RTK Query or Thunks), normalized state management, user authentication integration, and performance optimizations in building a fully interactive social media post feed with role-based restrictions and real-time interactions.
+
+Requirements:
+1. Authentication & Authorization
+Integrate user login system (mock login using JWT/localStorage).
+
+Only logged-in users can:
+
+Like a post.
+
+Bookmark a post.
+
+Add comments/replies.
+
+If not logged in:
+
+Show a modal or toast prompting user to log in.
+
+Hide interaction buttons or disable them.
+
+2. Post Feed
+Fetch posts from a mock API (with pagination or infinite scrolling).
+
+Each post should include:
+
+Author info (name, avatar, link to profile).
+
+Media (image/video) support with fallbacks.
+
+Captions with hashtags and mentions.
+
+Time since posted (e.g., “2 hours ago”).
+
+3. Advanced Interaction Features
+ Likes:
+
+Optimistic updates using Redux Toolkit (update UI immediately, then confirm with API).
+
+Disable liking a post twice.
+
+Like counts per post, updated live.
+
+Comments:
+
+Nested comments (replies to replies).
+
+Reply-to structure using normalized state.
+
+Optimistic updates for new comments.
+
+Markdown support (optional).
+
+Bookmarks/Saved Posts:
+
+Save/bookmark a post to user profile (Redux persist/localStorage).
+
+“Saved Posts” page to view all bookmarks.
+
+Sync state between Redux and persistent storage.
+
+Post Filtering & Search:
+
+Search bar with debounce (e.g., 500ms delay).
+
+Search by:
+
+Post caption content.
+
+Author name.
+
+Hashtags.
+
+Filter options:
+
+Most Liked
+
+Most Commented
+
+Recently Posted
+
+Media Only (image/video)
+
+4. Redux Toolkit & State Management
+Use Redux Toolkit with:
+
+createSlice
+
+createAsyncThunk or RTK Query
+
+Normalized entities:
+
+users, posts, comments, bookmarks
+
+Advanced features:
+
+Middleware to simulate latency and errors.
+
+Memoized selectors using reselect to reduce unnecessary renders.
+
+Debounced selectors for live search.
+
+Redux persist for saved posts.
+
+
+Expected Output:
+Shows paginated/infinite list of posts.
+
+Allows logged-in users to like, comment, and bookmark.
+
+Filters posts based on user input.
+
+Uses normalized Redux state with memoized selectors.
+
+Includes debounced search and performance optimizations.
