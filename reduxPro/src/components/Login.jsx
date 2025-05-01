@@ -13,7 +13,6 @@ function Login() {
     try {
       await axios.post('http://localhost:5000', { email, password }, { withCredentials: true , validateStatus : () => true});
 
-      // onLogin();
     } catch (err) {
       console.log('eer',err)
       setError(err.response?.data?.message || 'Something went wrong');
