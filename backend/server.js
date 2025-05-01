@@ -14,7 +14,7 @@ dotenv.config();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "http://localhost:5174", credentials: true }));
 
 mongoose
   .connect("mongodb://localhost:27017/socialDB")
@@ -44,8 +44,7 @@ app.post("/api/posts/:id/like", async (req, res) => {
 app.delete("/api/posts/:id/unlike", async (req, res) => {
   try {
     const ip = req.ip;
-    const postId = req.params.postId;
-
+    const postId = req.params.id;
     await Like.findOneAndDelete({ postId, ip });
     res.status(200).json({ message: "Post unliked" });
   } catch (error) {
@@ -71,7 +70,7 @@ app.post("/api/posts/:id/bookmark", async (req, res) => {
 app.delete("/api/posts/:id/unbookmark", async (req, res) => {
   try {
     const ip = req.ip;
-    const postId = req.params.postId;
+    const postId = req.params.id;
 
     await Bookmark.findOneAndDelete({ postId, ip });
     res.status(200).json({ message: "Post unbookmarked" });

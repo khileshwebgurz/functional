@@ -45,7 +45,7 @@ const Dashboard = () => {
   }, []);
 
 
-  console.log('set posts are >>>',posts)
+
 
  
 

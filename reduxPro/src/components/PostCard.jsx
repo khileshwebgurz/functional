@@ -18,24 +18,32 @@ const PostCard = ({ post }) => {
       .catch((err) => console.error("Status check failed", err));
   }, [post.id]);
 
+  // for handling like and unlike  based on toggling the button
   const handleLike = () => {
     const action = liked ? "unlike" : "like";
+    const method = liked ? "delete" : "post";
 
-    axios
-      .post(`${API_BASE}/${post.id}/${action}`, {}, { withCredentials: true })
+    axios({
+      method,
+      url: `${API_BASE}/${post.id}/${action}`,
+      withCredentials: true,
+    })
       .then(() => setLiked(!liked))
       .catch((err) => console.error("Like toggle failed", err));
   };
 
+  // for handling bookmark based on bookmark and unbookmark on toggling the button
   const handleBookmark = () => {
     const action = bookmarked ? "unbookmark" : "bookmark";
-    console.log('my action is >>>',action)
-    setBookmarked(!bookmarked)
+    const method = bookmarked ? "delete" : "post";
 
-    axios
-      .post(`${API_BASE}/${post.id}/${action}`, {}, { withCredentials: true })
+    axios({
+      method,
+      url: `${API_BASE}/${post.id}/${action}`,
+      withCredentials: true,
+    })
       .then(() => setBookmarked(!bookmarked))
-      .catch((err) => console.error("Bookmark toggle failed", err));
+      .catch((err) => console.error("Bookmark toggle failed ", err));
   };
 
   return (
@@ -45,10 +53,8 @@ const PostCard = ({ post }) => {
       <p>{post.description}</p>
 
       <div style={styles.actions}>
-        <button onClick={handleLike} disabled={liked}>
-          {liked ? "❤️ Liked" : "🤍 Like"}
-        </button>
-        <button onClick={handleBookmark} disabled={bookmarked}>
+        <button onClick={handleLike}>{liked ? "❤️ Liked" : "🤍 Like"}</button>
+        <button onClick={handleBookmark}>
           {bookmarked ? "🔖 Bookmarked" : "📑 Bookmark"}
         </button>
       </div>
