@@ -8,8 +8,9 @@ const PORT = 5000;
 const LoginRoutes = require("./routes/Login");
 const LogoutRoute = require("./routes/Logout");
 const ProfileRoute = require("./routes/Profile");
-const Like = require("./models/Likes");
-const Bookmark = require("./models/Bookmark");
+const LikeRoute = require("./routes/LikeUnlike");
+const BookMarkRoute = require("./routes/BookmarkUnbookmark");
+const StatusRoute = require("./routes/Status");
 dotenv.config();
 
 app.use(express.json());
@@ -27,68 +28,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Like a post
-app.post("/api/posts/:id/like", async (req, res) => {
-  const { id } = req.params;
-  const ip = req.clientIp;
+// like middleware
+app.use("/api/posts/:id/like", LikeRoute);
 
-  const existing = await Like.findOne({ postId: id, ip });
-  if (existing) {
-    return res.status(200).json({ message: "Already liked" });
-  }
-  await Like.create({ postId: id, ip });
-  res.status(201).json({ message: "Liked" });
-});
-
-// unlike a post
-app.delete("/api/posts/:id/unlike", async (req, res) => {
-  try {
-    const ip = req.ip;
-    const postId = req.params.id;
-    await Like.findOneAndDelete({ postId, ip });
-    res.status(200).json({ message: "Post unliked" });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to unlike post" });
-  }
-});
-
-// Bookmark a post
-app.post("/api/posts/:id/bookmark", async (req, res) => {
-  const { id } = req.params;
-  const ip = req.clientIp;
-
-  const existing = await Bookmark.findOne({ postId: id, ip });
-  if (existing) {
-    return res.status(200).json({ message: "Already bookmarked" });
-  }
-
-  await Bookmark.create({ postId: id, ip });
-  res.status(201).json({ message: "Bookmarked" });
-});
-
-// unbookmark a post
-app.delete("/api/posts/:id/unbookmark", async (req, res) => {
-  try {
-    const ip = req.ip;
-    const postId = req.params.id;
-
-    await Bookmark.findOneAndDelete({ postId, ip });
-    res.status(200).json({ message: "Post unbookmarked" });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to unbookmark post" });
-  }
-});
+// bookmark middleware
+app.use("/api/posts/:id/bookmark", BookMarkRoute);
 
 // Check like/bookmark status
-app.get("/api/posts/:id/status", async (req, res) => {
-  const { id } = req.params;
-  const ip = req.clientIp;
-
-  const liked = await Like.exists({ postId: id, ip });
-  const bookmarked = await Bookmark.exists({ postId: id, ip });
-
-  res.json({ liked: !!liked, bookmarked: !!bookmarked });
-});
+app.use("/api/posts/:id/status", StatusRoute);
 
 app.use("/", LoginRoutes);
 app.use("/logout", LogoutRoute);

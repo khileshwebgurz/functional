@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { formatDistanceToNow } from "date-fns";
 import PostCard from "./PostCard";
 
 const Dashboard = () => {
@@ -19,7 +18,7 @@ const Dashboard = () => {
       setLoading(true);
 
       try {
-        const postRes = await axios.get("https://dummyjson.com/posts?limit=10");
+        const postRes = await axios.get("https://dummyjson.com/posts?limit=20");
         const postData = postRes.data.posts;
 
         const userRequests = postData.map((post) =>
