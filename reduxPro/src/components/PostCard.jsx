@@ -3,16 +3,6 @@ import { useNavigate } from "react-router-dom";
 const PostCard = ({ post }) => {
   const Navigate = useNavigate();
 
-  // Check if already liked/bookmarked
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_BASE}/${post.id}/status`, { withCredentials: true })
-  //     .then((res) => {
-  //       setLiked(res.data.liked);
-  //       setBookmarked(res.data.bookmarked);
-  //     })
-  //     .catch((err) => console.error("Status check failed", err));
-  // }, [post.id]);
 
   // handling modal
   const handleShowModel = () => {
@@ -31,7 +21,6 @@ const PostCard = ({ post }) => {
     </div>
   );
 };
-
 const styles = {
   card: {
     border: "1px solid #ddd",
